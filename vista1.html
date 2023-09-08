@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+    /* Estilos para la tabla */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-family: Arial, sans-serif;
+        border: 2px solid #DB42B4; /* Borde morado */
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #DB42B4; /* Borde morado para celdas */
+    }
+
+    th {
+        background-color: #DB42B4; /* Fondo morado para encabezados */
+        color: white; /* Texto blanco para encabezados */
+        font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+        background-color: #F9E4F2; /* Fondo rosa suave para filas pares */
+    }
+
+    tr:nth-child(odd) {
+        background-color: #FFDFED; /* Fondo rosa más claro para filas impares */
+    }
+
+    /* Estilo de hover para filas */
+    tr:hover {
+        background-color: #FFC3E6; /* Fondo rosado aún más claro en hover */
+        color: #DB42B4; /* Texto morado en hover */
+    }
+
+    /* Estilos para la cabecera de la tabla */
+    thead {
+        font-size: 16px;
+    }
+
+    /* Estilos para el texto en las celdas */
+    td {
+        font-size: 14px;
+    }
+
+    /* Añadir un borde inferior a las filas */
+    tr {
+        border-bottom: 1px solid #ddd;
+    }
+
+  body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+            background-color: #FFC3E6; /* Color de fondo rosado intenso */
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 90%;
+            max-width: 1000px;
+            margin-top: 20px;
+        }
+
+        .form-container {
+            flex: 1;
+            text-align: center;
+            background-color: #FFDFED; /* Color de fondo rosado suave */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+        }
+
+        .search-container {
+            flex: 1;
+            text-align: center;
+            background-color: #FFDFED; /* Color de fondo rosado suave */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+        }
+
+        form h1, form h3 {
+            color: #DB42B4; /* Color morado vibrante */
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        form input, select {
+            margin-bottom: 10px;
+            background-color: #F9E4F2; /* Color rosa suave para campos de entrada */
+            color: #FF7AAB; /* Color rosa intenso */
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            width: 100%;
+        }
+
+        input[type="submit"] {
+            background-color: #DB42B4; /* Color morado vibrante para el botón */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #C92D9F; /* Cambio de color en el hover */
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-arrow-down-b-512.png') no-repeat right center / 20px auto;
+            padding-right: 40px;
+            background-color: #D8B8E9; /* Color morado suave para campos de selección */
+            color: #673AB7; /* Color morado */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #000;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+    </style>
+    <script type="text/javascript">
+        function validarTexto(input) {
+            var regex = /^[a-zA-Z\s]*$/;
+
+            if (!regex.test(input.value)) {
+                alert("Por favor, ingresa solo letras.");
+                input.value = input.value.replace(/[^a-zA-Z\s]/g, ''); // Eliminar caracteres no alfabéticos
+                return false;
+            }
+
+            return true;
+        }
+
+        function limpiarNoNumerico(elemento) {
+            elemento.value = elemento.value.replace(/[^\d+]/g, ''); // Remover caracteres no numéricos excepto '+'
+        }
+        
+        function validarTelefono(inputName) {
+    var telefonoInput = document.getElementsByName(inputName)[0];
+    var telefono = telefonoInput.value;
+
+    if (telefono.length >= 12 && telefono.length <= 13) {
+        if (telefono.startsWith("+591")) {
+            var numeroTelefono = telefono.substring(4); // Obtener el número sin el código de país
+            if (/^\d{8}$/.test(numeroTelefono)) {
+                return true; // Teléfono válido
+            } else {
+                alert("El número de teléfono debe tener 8 cifras después de +591.");
+                telefonoInput.value = "+591"; // Restaurar el valor inicial
+                return false;
+            }
+        } else {
+            alert("El número de teléfono debe empezar con +591.");
+            telefonoInput.value = "+591"; // Restaurar el valor inicial
+            return false;
+        }
+    } else {
+        alert("El número de teléfono debe estar en el formato +591XXXXXXXX.");
+        telefonoInput.value = "+591"; // Restaurar el valor inicial
+        return false;
+    }
+}
+    </script>
+</head>
+<body>
+    <form id="mySearch" onsubmit="return doSearch()">
+    
+        <input type="text" name="search" required>
+        <input type="submit" value="search">
+    </form>
+    <table id="results"></table>
+    <!--<div id="id-search">
+        <br>
+        <label for="id_usuario_buscar">ID del Usuario a Buscar:</label>
+        <input type="text" name="id_usuario_buscar" id="id_usuario_buscar" value="">
+        <button type="button" onclick="loadUserData()">Cargar Datos</button>
+    </div>-->
+    <h1>FORMULARIO DE INSCRIPCIONES</h1>
+    <h3>Datos personales</h3>
+    <form method="post" action="controlador1.php">
+        <div id="id-edit" style="display: none;">
+            <label for="id_usuario_editar">ID del Usuario a Editar:</label>
+            <input type="text" name="id_usuario_editar" id="id_usuario_editar" value="">
+        </div>
+        Nombres : <input type="text" style="text-transform:uppercase;" value="" onkeyup="javascript:this.value=this.value.toUpperCase();" name="nombre" required minlength="2" maxlength="50" onblur="validarTexto(this)"><br><br>
+        Apellido Paterno : <input type="text" onkeyup="javascript:this.value=this.value.toUpperCase();" name="Apellido_P"required minlength="2" maxlength="50" onblur="validarTexto(this)" ><br><br>
+        Apellido Materno : <input type="text" onkeyup="javascript:this.value=this.value.toUpperCase();" name="Apellido_M"required minlength="2" maxlength="50" onblur="validarTexto(this)"><br><br>
+        Direccion : <input type="text" name="Direccion"required minlength="2" maxlength="100" style="text-transform:uppercase;"><br><br>
+        Fecha de Nacimiento: <input type="date" name="fechaNac"required min="1900-01-01"><br><br>
+        Teléfono Fijo: <input type="tel" name="Telefono" value="+591" maxlength="13" oninput="limpiarNoNumerico(this);" onblur="validarTelefono('Telefono');"><br><br>
+        Teléfono Móvil: <input type="tel" name="Celular" value="+591" maxlength="13" oninput="limpiarNoNumerico(this);" onblur="validarTelefono('Celular');" required><br><br>
+        Lugar de Nacimiento: <select name="lugarNac" required>
+            <option value="COCHABAMBA">COCHABAMBA</option>
+            <option value="LA PAZ">LA PAZ</option>
+            <option value="SANTA CRUZ">SANTA CRUZ</option>
+          <option value="POTOSI">POTOSI</option>
+          <option value="ORURO">ORURO</option>
+          <option value="CHUQUISACA">CHUQUISACA</option>
+          <option value="BENI">BENI</option>
+          <option value="PANDO">PANDO</option>
+          <option value="TARIJA">TARIJA</option>
+          <option value="OTRO" selected >OTRO</option>
+        </select><br><br>
+        País: <select name="pais" required>
+            <option value="BRASIL">BRASIL</option>
+            <option value="ARGENTINA">ARGENTINA</option>
+            <option value="COLOMBIA">COLOMBIA</option>
+          <option value="PERÚ">PERÚ</option>
+          <option value="CHILE">CHILE</option>
+          <option value="ECUADOR">ECUADOR</option>
+          <option value="VENEZUELA">VENEZUELA</option>
+          <option value="BOLIVIA">BOLIVIA</option>
+          <option value="GUYANA">GUYANA</option>
+          <option value="PARAGUAY">PARAGUAY</option>
+          <option value="SURINAME">SURINAME</option>
+          <option value="URUGUAY">URUGUAY</option>
+          <option value="OTRO" selected >OTRO</option>
+        
+        </select><br><br>
+        Correo Electrónico : <input type="email" name="Correo"><br><br required> 
+        Carrera: <select name="carrera" required>
+            <option value="INGENIERIA DE SISTEMAS">INGENIERIA DE SISTEMAS</option>
+            <option value="ARQUITECTURA">ARQUITECTURA</option>
+            <option value="DISEÑO GRÁFICO Y PRODUCCIÓN CROSSMEDIA">DISEÑO GRÁFICO Y PRODUCCIÓN CROSSMEDIA</option>
+          <option value="PUBLICIDAD Y MARKETING">PUBLICIDAD Y MARKETING</option>
+          <option value="DERECHO">DERECHO</option>
+          <option value="PERIODISMO">PERIODISMO</option>
+          <option value="PSICOLOGÍA">PSICOLOGÍA</option>
+          <option value="ENFERMERÍA">ENFERMERÍA</option>
+          <option value="BIOQUÍMICA Y FARMACIA">BIOQUÍMICA Y FARMACIA</option>
+          <option value="ODONTOLOGÍA">ODONTOLOGÍA</option>
+          <option value="MEDICINA">MEDICINA</option>
+          <option value="ADMINISTRACIÓN DE EMPRESAS">ADMINISTRACIÓN DE EMPRESAS</option>
+          <option value="ADMINISTRACIÓN DE HOTELERÍA Y TURISMO">ADMINISTRACIÓN DE HOTELERÍA Y TURISMO</option>
+          <option value="CONTADURÍA PÚBLICA" >CONTADURÍA PÚBLICA</option> 
+          <option value="INGENIERÍA COMERCIAL"  >INGENIERÍA COMERCIAL</option>
+          <option value="INGENIERÍA ECONÓMICA" >INGENIERÍA ECONÓMICA</option>
+          <option value="INGENIERÍA ECONÓMICA Y FINANCIERA">INGENIERÍA ECONÓMICA Y FINANCIERA</option>
+          <option value="OTRO" selected >OTRO</option>
+
+        </select><br><br>
+        <input type="submit" value="ACEPTAR">
+    </form>
+
+    <script>
+
+function loadUserData() {
+    // Obtener el ID del usuario a editar desde el campo de búsqueda
+    const idUsuarioBuscar = document.getElementById("id_usuario_buscar").value;
+
+    // Realizar una solicitud AJAX al servidor para obtener los datos del usuario por ID
+    fetch(`get_user_data.php?id=${idUsuarioBuscar}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.length > 0) {
+                // Rellenar los campos del formulario con los datos del usuario
+                const usuario = data[0]; // Suponiendo que data contiene los datos del usuario
+                document.getElementById("nombre").value = usuario.nombre;
+                document.getElementById("Apellido_P").value = usuario.Apellido_P;
+                document.getElementById("Apellido_M").value = usuario.Apellido_M;
+                document.getElementById("Direccion").value = usuario.Direccion;
+                document.getElementById("fechaNac").value = usuario.fechaNac;
+                document.getElementById("Telefono").value = usuario.Telefono;
+                document.getElementById("Celular").value = usuario.Celular;
+                document.getElementById("lugarNac").value = usuario.lugarNac;
+                document.getElementById("pais").value = usuario.pais;
+                document.getElementById("Correo").value = usuario.email;
+                document.getElementById("carrera").value = usuario.carrera;
+
+                // Mostrar el campo ID de edición y establecer su valor
+                setupForEdit(idUsuarioBuscar);
+            } else {
+                alert("Usuario no encontrado.");
+            }
+        })
+        .catch(error => {
+            console.error("Error al cargar los datos del usuario:", error);
+        });
+}
+
+         // Función para cargar los resultados en una tabla
+         function loadResultsTable(resultsData) {
+            let resultsTable = document.getElementById("results");
+            resultsTable.innerHTML = ""; // Limpiar tabla existente
+
+            if (resultsData !== null && resultsData.length > 0) {
+                // Crear la cabecera de la tabla
+                let tableHeader = "<tr><th>ID</th><th>Nombre</th><th>Ap. Paterno</th><th>Ap. Materno</th><th>Dirección</th><th>Nacimiento</th><th>Teléfono</th><th>Nº Celular</th><th>Lugar Nacimiento</th><th>Pais</th><th>Email</th><th>Carrera</th></tr>";
+                resultsTable.innerHTML += tableHeader;
+
+                // Agregar filas de datos a la tabla
+                for (let r of resultsData) {
+                    let row = `<tr><td>${r.id}</td><td>${r.nombre}</td><td>${r.Apellido_P}</td><td>${r.Apellido_M}</td><td>${r.Direccion}</td><td>${r.fechaNac}</td><td>${r.Telefono}</td><td>${r.Celular}</td><td>${r.lugarNac}</td><td>${r.pais}</td><td>${r.email}</td><td>${r.carrera}</td></tr>`;
+                    resultsTable.innerHTML += row;
+                }
+            } else {
+                resultsTable.innerHTML = "<p>No se encontraron resultados.</p>";
+            }
+        }
+        document.querySelector("#mySearch").addEventListener("submit", function (event) {
+            event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+            doSearch(); // Llamar a la función de búsqueda
+        });
+        function doSearch() {
+            // (A1) GET SEARCH TERM
+            var data = new FormData(document.getElementById("mySearch"));
+
+            // (A2) AJAX - USE HTTP:// NOT FILE://
+            fetch("controlador1.php", { method: "POST", body: data })
+                .then(res => res.json())
+                .then(res => {
+                    loadResultsTable(res); // Cargar resultados en la tabla
+                });
+
+            return false;
+            }
+            
+   </script> 
+    
+
+    
+</body>
+</html>
